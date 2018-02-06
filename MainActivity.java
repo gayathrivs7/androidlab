@@ -1,105 +1,88 @@
-package com.example.mcaguest.w2;
+package com.example.mcaguest.workshop1;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import android.content.Intent;
+import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.gsm.SmsManager;
-import android.view.View;
+import android.view.MotionEvent;
 import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0 ;
-    Button button2,button3;
-    private Context context = this;
-    EditText editText2,editText3;
+    Button button1,button4,button5;
+    EditText ed1, ed2;
+    Button add;
+    TextView tresult;
+    RatingBar ratingBar1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button3=(Button)findViewById(R.id.button2);
-        editText2=(EditText)findViewById(R.id.editText2);
-        editText3=(EditText)findViewById(R.id.editText3);
-        button2=(Button)findViewById(R.id.button);
-        button2.setOnClickListener(new View.OnClickListener() {
+       button1 = (Button) findViewById(R.id.button);
+        ed1 = (EditText) findViewById(R.id.editText3);
+        ed2 = (EditText) findViewById(R.id.editText4);
+        add = (Button) findViewById(R.id.button3);
+        tresult = (TextView) findViewById(R.id.textView);
+        button4=(Button)findViewById(R.id.button4);
+        button5=(Button)findViewById(R.id.button5);
+        ratingBar1=(RatingBar)findViewById(R.id.ratingBar);
+        ratingBar1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Toast.makeText(MainActivity.this, String.valueOf(ratingBar1.getRating()), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+       /* first try..............
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alert= new AlertDialog.Builder(context);
-                alert.setTitle("Close application");
-                alert.setMessage("Do you want to close ? ").setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        MainActivity.this.finish();
-
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                AlertDialog ale=alert.create();
-                ale.show();
+                Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
-        // DISPLAYING ALERT BOX WITHOUT BUTTON CLICK "TOUCH"
-   /*     AlertDialog.Builder alert= new AlertDialog.Builder(context);
-        alert.setTitle("close");
-        alert.setMessage("Do you want to close ? ").setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                MainActivity.this.finish();
-
-            }
-        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        AlertDialog ale=alert.create();
-        ale.show();
-
-        */
 
     }
-    public  void send(View v) {
-        String message = editText3.getText().toString();
-        String number = editText2.getText().toString();
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            //smsManager.sendTextMessage(number, null, message, null, null);
-            smsManager.sendTextMessage(message,null,number,null,null);
-            Toast.makeText(context, "MESSAGE SENT", Toast.LENGTH_SHORT).show();
 
+   /* public void toast(View View)
+    {
+        Toast.makeText(this, "SENDING...", Toast.LENGTH_SHORT).show();
+    }*/
 
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),
-                    "SMS faild, please try again later!",
-                    Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+    public void add(View View)
+    {
+        double var1 = Double.parseDouble(ed1.getText().toString());
+        double var2=Double.parseDouble(ed2.getText().toString());
+        double result= var1+var2;
+         tresult.setText(String.valueOf(result));
+         button1.setVisibility(View.INVISIBLE);
+         Intent intent=new  Intent(getApplicationContext(),Main2Activity.class);
+         startActivity(intent);
 
-        }
     }
+    public void concat(View View) {
 
+        button1.setVisibility(View.INVISIBLE);
+        String var1 = (ed1.getText().toString());
+        String var2=(ed2.getText().toString());
+        String result= var1+var2;
+        tresult.setText(String.valueOf(result));
+
+    }
+    public void rate(View View)
+    {
+        button1.setVisibility(View.INVISIBLE);
+        button4.setVisibility(View.INVISIBLE);
+       // button2.setVisibility(View.INVISIBLE);
+       // button3.setVisibility(View.INVISIBLE);
+     String rt=String.valueOf(ratingBar1.getRating());
+        Toast.makeText(this,rt, Toast.LENGTH_SHORT).show();
+
+    }
 }
-/*try {
-				SmsManager smsManager = SmsManager.getDefault();
-				smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-				Toast.makeText(getApplicationContext(), "SMS Sent!",
-							Toast.LENGTH_LONG).show();
-			  } catch (Exception e) {
-				Toast.makeText(getApplicationContext(),
-					"SMS faild, please try again later!",
-					Toast.LENGTH_LONG).show();
-				e.printStackTrace();
-			  }
-
-			}*/
