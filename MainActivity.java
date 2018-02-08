@@ -1,88 +1,93 @@
-package com.example.mcaguest.workshop1;
+package com.example.mca16a.gayath_eliz;
 
 import android.content.Intent;
-import android.media.Rating;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.widget.Button;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mcaguest.gayath_eliz.R;
+
 public class MainActivity extends AppCompatActivity {
-    Button button1,button4,button5;
-    EditText ed1, ed2;
-    Button add;
-    TextView tresult;
-    RatingBar ratingBar1;
+    Button button,send2,brow;
+    EditText text2;
+    TextView text3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       button1 = (Button) findViewById(R.id.button);
-        ed1 = (EditText) findViewById(R.id.editText3);
-        ed2 = (EditText) findViewById(R.id.editText4);
-        add = (Button) findViewById(R.id.button3);
-        tresult = (TextView) findViewById(R.id.textView);
-        button4=(Button)findViewById(R.id.button4);
-        button5=(Button)findViewById(R.id.button5);
-        ratingBar1=(RatingBar)findViewById(R.id.ratingBar);
-        ratingBar1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Toast.makeText(MainActivity.this, String.valueOf(ratingBar1.getRating()), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+        button= (Button)findViewById(R.id.button1);
+        send2=(Button)findViewById(R.id.button2);
+        text2=(EditText)findViewById(R.id.editText);
+        text3=(TextView) findViewById(R.id.textView3);
+        brow=(Button)findViewById(R.id.button3);
+        Intent i = getIntent();
+        String str = i.getStringExtra("message");
+        text3.setText(str);
 
-       /* first try..............
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
 
     }
 
-   /* public void toast(View View)
-    {
-        Toast.makeText(this, "SENDING...", Toast.LENGTH_SHORT).show();
-    }*/
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "Starting", Toast.LENGTH_SHORT).show();
+    }
 
-    public void add(View View)
-    {
-        double var1 = Double.parseDouble(ed1.getText().toString());
-        double var2=Double.parseDouble(ed2.getText().toString());
-        double result= var1+var2;
-         tresult.setText(String.valueOf(result));
-         button1.setVisibility(View.INVISIBLE);
-         Intent intent=new  Intent(getApplicationContext(),Main2Activity.class);
-         startActivity(intent);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "Stopping", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "Destroying", Toast.LENGTH_SHORT).show();
 
     }
-    public void concat(View View) {
 
-        button1.setVisibility(View.INVISIBLE);
-        String var1 = (ed1.getText().toString());
-        String var2=(ed2.getText().toString());
-        String result= var1+var2;
-        tresult.setText(String.valueOf(result));
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "Resuming", Toast.LENGTH_SHORT).show();
     }
-    public void rate(View View)
-    {
-        button1.setVisibility(View.INVISIBLE);
-        button4.setVisibility(View.INVISIBLE);
-       // button2.setVisibility(View.INVISIBLE);
-       // button3.setVisibility(View.INVISIBLE);
-     String rt=String.valueOf(ratingBar1.getRating());
-        Toast.makeText(this,rt, Toast.LENGTH_SHORT).show();
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this, "Pausing", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "Restarting", Toast.LENGTH_SHORT).show();
+    }
+
+    public void nextPage(View view)
+    {
+        Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+        startActivity(intent);
+    }
+    public void send2A(View v)
+    {
+        String message = text2.getText().toString();
+        Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+        intent.putExtra("message",message);
+        startActivity(intent);
+    }
+    public void browser(View v)
+    {
+        Uri uri1=Uri.parse("https://www.google.co.in/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri1);
+        startActivity(intent);
     }
 }

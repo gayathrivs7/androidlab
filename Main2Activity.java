@@ -1,34 +1,41 @@
-package com.example.mcaguest.workshop1;
+package com.example.mca16a.gayath_eliz;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.mca16a.gayath_eliz.MainActivity;
+import com.example.mca16a.gayath_eliz.R;
 
 public class Main2Activity extends AppCompatActivity {
-Button button2;
-private Context context = this;
+    TextView textView;
+    Button back;
+    EditText text;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        textView=(TextView)findViewById(R.id.textView);
+        back=(Button)findViewById(R.id.button);
+        text=(EditText) findViewById(R.id.editText);
+        Intent intent=getIntent();
+        String str=intent.getStringExtra("message");
+        textView.setText(str);
 
-        button2=(Button)findViewById(R.id.button);
-        AlertDialog.Builder alert= new AlertDialog.Builder(context);
-        alert.setTitle("close");
-        alert.setMessage("Do you want to close ? ").setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Main2Activity.this.finish();
+    }
+    public void callback(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        String message=text.getText().toString();
+        intent.putExtra("message",message);
+        startActivity(intent);
 
-            }
-        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
     }
 }
